@@ -11,10 +11,19 @@ class Test(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.__unicode__()
+
 
 class Question(models.Model):
     test = models.ForeignKey(Test)
     question = models.CharField(max_length=400)
+
+    def __unicode__(self):
+        return self.question
+
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Score(models.Model):
@@ -28,3 +37,9 @@ class Answer(models.Model):
     question = models.ForeignKey(Question)
     answer = models.CharField(max_length=400)
     points = models.IntegerField()
+
+    def __unicode__(self):
+        return self.answer
+
+    def __str__(self):
+        return self.__unicode__()

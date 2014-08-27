@@ -5,7 +5,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Bogdan Buhai', 'bogdan.buhai@3pillarglobal.com'),
 )
 ########## PATH CONFIGURATION
 DJANGO_ROOT = dirname(abspath(__file__))
@@ -29,7 +29,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -78,6 +78,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    normpath(join(SITE_ROOT, 'static')),
 )
 
 # List of finder classes that know how to find static files in
@@ -148,6 +149,11 @@ LOGGING = {
         }
     },
     'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': normpath(join(SITE_ROOT, 'log.txt'))
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],

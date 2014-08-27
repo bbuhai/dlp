@@ -1,0 +1,23 @@
+{% extends "personalitytests/main.html" %}
+{% block content %}
+<h3>{{test.name}}</h3>
+<br>
+{{test.description}}
+<form action="{% url 'pers:score' test_id=test.id %}" method="post">
+    {% csrf_token %}
+
+    <ol class="questions">
+        {% for question in questions %}
+        <li>{{ question.question }}<br>
+                {% for ans in question.answer_set.all %}
+                <div class="answers">
+                    <input type="radio" name="answers{{question.id}}" id="ans{{forloop.counter}}" value="{{ans.points}}" />
+                    <label for="ans{{forloop.counter}}">{{ans}}</label>
+                </div>
+                {% endfor %}
+        </li>
+        {% endfor %}
+    </ol>
+    <button type="submit">Submit answers</button>
+</form>
+{% endblock %}
