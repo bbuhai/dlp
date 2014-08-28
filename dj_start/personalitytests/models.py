@@ -14,6 +14,11 @@ class Test(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+    def shorten_description(self, length=160):
+        if len(self.description) > length - 3:  # 3 for the ellipses
+            return self.description[:length] + '...'
+        return self.description
+
 
 class Question(models.Model):
     test = models.ForeignKey(Test)
@@ -31,6 +36,10 @@ class Score(models.Model):
     min_score = models.IntegerField()
     max_score = models.IntegerField()
     result = models.CharField(max_length=400)
+    description = models.TextField(null=True)
+
+    def __unicode__(self):
+        return self.result[:20]
 
 
 class Answer(models.Model):

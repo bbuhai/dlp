@@ -142,17 +142,35 @@ INSTALLED_APPS = (
 # more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'simple': {
+            'format': '[%(levelname)s] %(message)s'
+        },
+        'verbose': {
+            'format': '[%(asctime)s][%(levelname)s] %(module)s %(message)s'
+        }
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': normpath(join(SITE_ROOT, 'log.txt'))
+            'filename': normpath(join(SITE_ROOT, 'log.txt')),
+            'formatter': 'verbose'
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -161,10 +179,19 @@ LOGGING = {
         }
     },
     'loggers': {
+        'django': {
+            'handlers': ['null'],
+            'propagate': True,
+            'level': 'INFO'
+        },
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
+        'personalitytests': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG'
+        }
     }
 }

@@ -1,18 +1,30 @@
 {% extends "personalitytests/main.html" %}
+{% load pers_tests %}
 {% block content %}
 <h3>{{test.name}}</h3>
 <br>
 {{test.description}}
-<form action="{% url 'pers:score' test_id=test.id %}" method="post">
+{% if unanswered_q %}
+<div class="error">You have some unanswered questions (marked in red).</div>
+{% endif %}
+<form action="" method="post">
     {% csrf_token %}
 
     <ol class="questions">
         {% for question in questions %}
-        <li>{{ question.question }}<br>
+        <li {% if question.id in unanswered_q %}
+                class="red"
+            {% endif %}
+                > {{ question.question }}<br>
                 {% for ans in question.answer_set.all %}
                 <div class="answers">
-                    <input type="radio" name="answers{{question.id}}" id="ans{{forloop.counter}}" value="{{ans.points}}" />
-                    <label for="ans{{forloop.counter}}">{{ans}}</label>
+                    <input type="radio" name="answers[{{question.id}}]"
+                           id="ans{{ans.id}}" value="{{ans.id}}"
+                            {% if ans.id in given_ans %}
+                                checked="checked"
+                            {% endif %}
+                            />
+                    <label for="ans{{ans.id}}">{{ans}}</label>
                 </div>
                 {% endfor %}
         </li>

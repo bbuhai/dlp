@@ -15,10 +15,12 @@
 
     </header>
     <nav>
+        {% block menu %}
         <ul class="nav nav-tabs nav-justified" role="tablist">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Tests</a></li>
+            <li><a href="{% url 'pers:tests_list' %}">Tests</a></li>
         </ul>
+        {% endblock %}
     </nav>
     <div class="row">
         <div class="col-md-3">
