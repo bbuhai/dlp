@@ -1,19 +1,26 @@
-{% extends "personalitytests/main.html" %}
-{% load pers_tests %}
+{% extends "personalitytests/tests.html" %}
+{% load staticfiles %}
+{% block menu %}
+<ul class="nav nav-tabs nav-justified" role="tablist">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'pers:tests_list' %}">Tests</a></li>
+    <li><a href="{% url 'contact' %}">Contact</a></li>
+</ul>
+{% endblock %}
 {% block content %}
 <h3>{{test.name}}</h3>
 <br>
 {{test.description}}
 {% if unanswered_q %}
-<div class="error">You have some unanswered questions (marked in red).</div>
+<div class="error text-danger">You have some unanswered questions (marked in red).</div>
 {% endif %}
-<form action="" method="post">
+<form action="{% url 'pers:test' test.id %}" method="post" id="pers_test">
     {% csrf_token %}
 
     <ol class="questions">
         {% for question in questions %}
         <li {% if question.id in unanswered_q %}
-                class="red"
+                class="text-danger"
             {% endif %}
                 > {{ question.question }}<br>
                 {% for ans in question.answer_set.all %}
@@ -30,6 +37,11 @@
         </li>
         {% endfor %}
     </ol>
-    <button type="submit">Submit answers</button>
+    <button type="submit" class="btn btn-primary">Submit answers</button>
+    <button type="reset" class="btn btn-link">Reset</button>
 </form>
+{% endblock %}
+
+{% block async_js %}
+<script type="text/javascript" src="{% static 'personalitytests/js/main.js' %}"></script>
 {% endblock %}

@@ -1,7 +1,8 @@
-{% extends "personalitytests/main.html" %}
+{% extends "main.html" %}
 {% block menu %}
 <ul class="nav nav-tabs nav-justified" role="tablist">
-    <li><a href="/">Home</a></li>
-    <li class="active"><a href="#">Tests</a></li>
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li class="active"><a href="{% url 'pers:tests_list' %}">Tests</a></li>
+    <li><a href="{% url 'contact' %}">Contact</a></li>
 </ul>
 {% endblock %}

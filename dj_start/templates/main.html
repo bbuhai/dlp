@@ -12,13 +12,14 @@
 <body>
 <div class="container">
     <header class="header">
-
+        <p class="header-txt">NICE HEADER</p>
     </header>
     <nav>
         {% block menu %}
         <ul class="nav nav-tabs nav-justified" role="tablist">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="{% url 'pers:tests_list' %}">Tests</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>
         {% endblock %}
     </nav>
@@ -41,5 +42,7 @@
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% block async_js %}
+{% endblock %}
 </body>
 </html>
