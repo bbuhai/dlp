@@ -1,7 +1,8 @@
 import logging
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
+from django.views.generic.base import View
+from django.core.urlresolvers import reverse
 
 from .forms import ContactForm
 
@@ -13,13 +14,16 @@ def home(request):
     return render(request, 'home.html', {'msg': 'Nothing here yet...'})
 
 
-def contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
+class ContactView(View):
+    form_class = ContactForm
+    template_name = 'contact.html'
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
-            return render(request, 'contact.html', {'msg': 'Thanks!'})
-
-    form = ContactForm()
-    logger.debug(form)
-
-    return render(request, 'contact.html', {'form': form})
+            return HttpResponseRedirect(reverse('contact'))
+        return render(request, self.template_name, {'form': form})

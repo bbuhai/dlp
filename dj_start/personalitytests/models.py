@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.db.models import Sum
 
 
 class Test(models.Model):
@@ -52,3 +53,8 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.__unicode__()
+
+    @classmethod
+    def get_total_points(cls, answer_ids):
+        score = cls.objects.filter(id__in=answer_ids).aggregate(Sum('points'))
+        return score['points__sum'] or 0

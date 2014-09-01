@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
-from django.db.models import Sum
+from django.views.generic.base import View
 
 from personalitytests.models import Test, Question, Answer, Score
 
@@ -18,7 +18,6 @@ class HomeView(generic.ListView):
     model = Test
 
     def get_queryset(self):
-        logger.debug('listing tests...')
         return Test.objects.order_by('-created_at').all()
 
 
@@ -41,8 +40,7 @@ def test(request, test_id):
                 logger.info(e)
 
         if len(unanswered_q) == 0:
-            score = Answer.objects.filter(id__in=ans).aggregate(Sum('points'))
-            score = score['points__sum'] or 0
+            score = Answer.get_total_points(ans)
             return HttpResponseRedirect(reverse('pers:result', args=(test_id, score)))
 
     context = {
