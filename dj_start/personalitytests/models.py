@@ -1,12 +1,11 @@
-import datetime
-
 from django.db import models
 from django.db.models import Sum
+from django.contrib.auth.models import User
 
 
 class Test(models.Model):
     name = models.CharField(max_length=200, verbose_name='Test name')
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now=True)
     description = models.TextField()
 
     def __unicode__(self):
@@ -58,3 +57,9 @@ class Answer(models.Model):
     def get_total_points(cls, answer_ids):
         score = cls.objects.filter(id__in=answer_ids).aggregate(Sum('points'))
         return score['points__sum'] or 0
+
+
+class UserScore(models.Model):
+    user = models.ForeignKey(User)
+    score = models.IntegerField()
+    date_taken = models.DateTimeField(auto_now=True)

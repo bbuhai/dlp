@@ -4,9 +4,8 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
-from django.views.generic.base import View
 
-from personalitytests.models import Test, Question, Answer, Score
+from personalitytests.models import Test, Answer, Score
 
 
 logger = logging.getLogger(__name__)
