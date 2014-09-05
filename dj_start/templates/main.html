@@ -3,11 +3,11 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Personality tests</title>
-    <link href="{% static 'personalitytests/css/main.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <title>Dj</title>
+    <link href="{% static 'personalitytests/css/main.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'survey/css/survey.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}" />
-
 </head>
 <body>
 <div class="container">
@@ -19,6 +19,7 @@
         <ul class="nav nav-tabs nav-justified" role="tablist">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="{% url 'pers:tests_list' %}">Tests</a></li>
+            <li><a href="{% url 'survey:list' %}">Surveys</a></li>
             <li><a href="{% url 'contact' %}">Contact</a></li>
         </ul>
         {% endblock %}
@@ -37,12 +38,12 @@
     </div>
 
     <footer class="footer">
-        Some footer
+        really nice footer
     </footer>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-{% block async_js %}
+{% block asyncjs %}
 {% endblock %}
 </body>
 </html>

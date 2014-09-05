@@ -1,7 +1,7 @@
 from django.contrib import admin
 from survey.models import (Survey, Question, Answer, Result, Page)
 from django.db import models
-from django.forms import Textarea
+from django.forms import Textarea, TextInput
 
 
 class ResultInLine(admin.TabularInline):
@@ -25,16 +25,32 @@ class SurveyAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at')
     search_fields = ['name']
 
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': 80})},
+        models.TextField: {'widget': Textarea(attrs={'rows': 8, 'cols': 100})}
+    }
+
 
 class AnswerInline(admin.TabularInline):
+    readonly_fields = ['id']
     model = Answer
-    extra = 4
+    extra = 2
+
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': 100})}
+    }
 
 
 class QuestionAdmin(admin.ModelAdmin):
+    readonly_fields = ['id']
+    fields = ['id', 'page', 'question_text', 'position', 'type']
     inlines = [AnswerInline]
     list_display = ('question_text', 'page', 'position')
     search_fields = ['question_text']
+
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size': 150})}
+    }
 
 
 admin.site.register(Survey, SurveyAdmin)

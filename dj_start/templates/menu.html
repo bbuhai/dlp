@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs nav-justified" role="tablist">
+    <li {% if item == 1 %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
+    <li {% if item == 2 %}class="active"{% endif %}><a href="{% url 'pers:tests_list' %}">Tests</a></li>
+    <li {% if item == 3 %}class="active"{% endif %}><a href="{% url 'survey:list' %}">Surveys</a></li>
+    <li {% if item == 4 %}class="active"{% endif %}><a href="{% url 'contact' %}">Contact</a></li>
+</ul>

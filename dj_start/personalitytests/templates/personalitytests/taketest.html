@@ -1,11 +1,8 @@
 {% extends "personalitytests/tests.html" %}
 {% load staticfiles %}
+{% load site_menu %}
 {% block menu %}
-<ul class="nav nav-tabs nav-justified" role="tablist">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'pers:tests_list' %}">Tests</a></li>
-    <li><a href="{% url 'contact' %}">Contact</a></li>
-</ul>
+    {% site_menu 0 %}
 {% endblock %}
 {% block content %}
 <h3>{{test.name}}</h3>
@@ -42,6 +39,6 @@
 </form>
 {% endblock %}
 
-{% block async_js %}
+{% block asyncjs %}
 <script type="text/javascript" src="{% static 'personalitytests/js/main.js' %}"></script>
 {% endblock %}

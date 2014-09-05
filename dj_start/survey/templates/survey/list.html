@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+{% load site_menu %}
+{% block menu %}
+    {% site_menu item=3 %}
+{% endblock %}
+{% block content %}
+    <div class="pages">
+        {% for page in pages %}
+            {% if page == current_page %}
+                <span class="page-current">{{page}}</span>
+            {% else %}
+                <a href="{% url 'survey:list' page=page limit=limit %}">{{page}}</a>
+            {% endif %}
+
+        {% endfor %}
+    </div>
+
+    <ol class="tests-list" start={{count_start}}>
+    {% for survey in surveys %}
+        <li class="test-item"><a href="{% url 'survey:survey' survey_id=survey.id %}">{{survey.name}}</a><br />
+        <div class="description">{{survey.shorten_description}}</div>
+        <div class="created-at">{{survey.created_at}}</div>
+        </li>
+    {% endfor %}
+    </ol>
+{% endblock %}

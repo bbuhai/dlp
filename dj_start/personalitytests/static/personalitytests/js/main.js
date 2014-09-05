@@ -17,8 +17,6 @@ var app = app || {};
         });
     };
 
-
-
     $(document).ready(function(){
         app.handle_submit_test();
     });

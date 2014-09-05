@@ -17,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': normpath(join(DJANGO_ROOT, 'initial.db')),
+        'NAME': normpath(join(SITE_ROOT, 'initial.db')),
 
         # The following settings are not used with sqlite3:
         'USER': '',
@@ -191,7 +191,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'personalitytests': {
+        'survey': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG'
         }

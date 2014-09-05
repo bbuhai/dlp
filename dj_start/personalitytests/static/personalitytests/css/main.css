@@ -58,3 +58,8 @@
     letter-spacing: 20px;
     text-align: center;
 }
+
+div label {
+    font-weight: normal;
+
+}

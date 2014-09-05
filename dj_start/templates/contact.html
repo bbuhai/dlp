@@ -1,10 +1,7 @@
 {% extends "main.html" %}
+{% load site_menu %}
 {% block menu %}
-<ul class="nav nav-tabs nav-justified" role="tablist">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'pers:tests_list' %}">Tests</a></li>
-    <li class="active"><a href="{% url 'contact' %}">Contact</a></li>
-</ul>
+    {% site_menu item=4 %}
 {% endblock %}
 {% block content %}
 <br>
