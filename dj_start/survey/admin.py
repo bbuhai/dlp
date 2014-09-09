@@ -45,7 +45,7 @@ class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ['id']
     fields = ['id', 'page', 'question_text', 'position', 'type']
     inlines = [AnswerInline]
-    list_display = ('question_text', 'page', 'position')
+    list_display = ('id', 'question_text', 'page', 'position')
     search_fields = ['question_text']
 
     formfield_overrides = {

@@ -1,4 +1,5 @@
 from math import ceil
+from itertools import chain
 import logging
 
 from django.shortcuts import (render, HttpResponseRedirect,
@@ -7,7 +8,8 @@ from django.core.urlresolvers import reverse
 from django.views.generic.base import View
 
 from survey.models import Survey, Question, Answer, Page, Result
-from closealternative import Finder
+from closealternative import DiscoverPath, AnsTuple
+
 
 logger = logging.getLogger(__name__)
 
@@ -136,6 +138,8 @@ class ResultView(View):
 
 
 class ClosestPath(View):
+    template_name = 'survey/closest_path.html'
+
     def get(self, request, survey_id):
         try:
             score = int(request.session.get('score', None))
@@ -143,25 +147,63 @@ class ClosestPath(View):
             return HttpResponse("no score")
         next_result = Result.get_result_above(survey_id, score)
         prev_result = Result.get_result_below(survey_id, score)
-        given_ans = request.session.get('answers')
+        given_ans_ids = request.session.get('answers')
 
         pages = Page.objects.filter(survey=survey_id)
-        data = {}
-        points = {}
+        other_ans = {}
+        given_ans = {}
+
         for page in pages:
             answers = Answer.objects.filter(question__page=page)
-            data[page.id] = {}
+            given_ans[page.id] = {}
+            other_ans[page.id] = {}
             for ans in answers:
-                data[page.id][ans.question.id] = data[page.id].get(ans.question, [])
-                data[page.id][ans.question.id].append(ans.id)
-                points[ans.id] = ans.score
+                a = AnsTuple(id=ans.id, score=ans.score)
+                other_ans[page.id][ans.question.id] = other_ans[page.id].get(ans.question.id, [])
+                given_ans[page.id][ans.question.id] = given_ans[page.id].get(ans.question.id, [])
 
+                if ans.id in given_ans_ids:
+                    given_ans[page.id][ans.question.id].append(a)
+                else:
+                    other_ans[page.id][ans.question.id].append(a)
 
-        f = Finder(current_score=score,
-                   next_result=next_result,
-                   previous_result=prev_result,
-                   answers=given_ans,
-                   pages=data,
-                   points=points)
-        f.compute()
-        return HttpResponse("my very awesome response")
+        d = DiscoverPath(score=score,
+                         next_result=next_result,
+                         prev_result=prev_result,
+                         answers=given_ans,
+                         other_answers=other_ans)
+        alternative = d.compute()
+        better, worse = self._prepare_result_for_display(alternative)
+        context = {
+            'txt': 'awesome response',
+            'better': better,
+            'worse': worse
+        }
+        return render(request, self.template_name, context)
+
+    def _prepare_result_for_display(self, alternative):
+        better = alternative.get('better', {})
+        better_prepared = {}
+        worse = alternative.get('worse', {})
+        worse_prepared = {}
+
+        question_ids = []
+        answer_ids = []
+        for w in chain(better.itervalues(), worse.itervalues()):
+            question_ids.append(w.q)
+            answer_ids += [a.id for a in w.add]
+            answer_ids += [a.id for a in w.rm]
+
+        questions = Question.objects.in_bulk(question_ids)
+        answers = Answer.objects.in_bulk(answer_ids)
+
+        for w in better.itervalues():
+            better_prepared[questions[w.q]] = {'add': [], 'rm': []}
+            better_prepared[questions[w.q]]['add'] = [answers[a.id] for a in w.add]
+            better_prepared[questions[w.q]]['rm'] = [answers[a.id] for a in w.rm]
+
+        for w in worse.itervalues():
+            worse_prepared[questions[w.q]] = {'add': [], 'rm': []}
+            worse_prepared[questions[w.q]]['add'] = [answers[a.id] for a in w.add]
+            worse_prepared[questions[w.q]]['rm'] = [answers[a.id] for a in w.rm]
+        return better_prepared, worse_prepared

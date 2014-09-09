@@ -18,12 +18,11 @@
         </div>
         {% endif %}
     </div>
-    <div id="alternative" data-url="{% url 'survey:closest' survey_id%}">
+    <div id="alternative" data-url="{% url 'survey:closest' survey_id%}" data-score="{{score}}">
         <div>
             <div id="loader" class="loader"></div>
         </div>
     </div>
-        {{score}}
 {% endblock %}
 {% block asyncjs%}
     <script type="text/javascript" src="{% static 'survey/js/survey.js' %}"></script>

@@ -41,3 +41,16 @@
     padding: 25px;
     margin: 10px auto;
 }
+
+.score-alternative {
+    margin-top: 10px;
+    padding: 20px;
+    background-color: #E6F0E5;
+
+}
+.result.bg-info, .score-alternative {
+    border-radius: 10px;
+}
+.indent {
+    margin-left: 20px;
+}

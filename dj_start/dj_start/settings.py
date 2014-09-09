@@ -192,7 +192,7 @@ LOGGING = {
             'propagate': True,
         },
         'survey': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'DEBUG'
         }
     }

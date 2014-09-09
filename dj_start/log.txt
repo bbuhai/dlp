@@ -110,3 +110,141 @@ DEBUG 2014-08-28 17:55:26,135 views 18296 140679506294528 listing tests...
 [2014-09-01 11:52:59,293][DEBUG] views listing tests...
 [2014-09-01 11:53:04,083][DEBUG] views listing tests...
 [2014-09-01 11:54:33,943][DEBUG] views listing tests...
+[2014-09-08 11:43:36,462][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:43:36,505][INFO] closealternative 1 + 0 != 1
+[2014-09-08 11:44:15,151][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:44:15,152][INFO] closealternative 1 + 0 != 1
+[2014-09-08 11:44:17,922][INFO] closealternative 0 + 2 != 2
+[2014-09-08 11:44:17,924][INFO] closealternative 1 + 1 != 2
+[2014-09-08 11:44:17,925][INFO] closealternative 2 + 0 != 2
+[2014-09-08 11:44:40,928][INFO] closealternative 0 + 3 != 3
+[2014-09-08 11:44:40,930][INFO] closealternative 1 + 2 != 3
+[2014-09-08 11:44:40,930][INFO] closealternative 2 + 1 != 3
+[2014-09-08 11:44:40,931][INFO] closealternative 3 + 0 != 3
+[2014-09-08 11:44:40,932][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:44:40,932][INFO] closealternative 1 + 0 != 1
+[2014-09-08 11:44:40,934][INFO] closealternative 0 + 2 != 2
+[2014-09-08 11:44:40,935][INFO] closealternative 1 + 1 != 2
+[2014-09-08 11:44:40,936][INFO] closealternative 2 + 0 != 2
+[2014-09-08 11:44:40,937][INFO] closealternative 0 + 3 != 3
+[2014-09-08 11:44:40,938][INFO] closealternative 1 + 2 != 3
+[2014-09-08 11:44:40,939][INFO] closealternative 2 + 1 != 3
+[2014-09-08 11:44:40,941][INFO] closealternative 3 + 0 != 3
+[2014-09-08 11:44:40,942][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:44:40,943][INFO] closealternative 1 + 0 != 1
+[2014-09-08 11:44:40,944][INFO] closealternative 0 + 2 != 2
+[2014-09-08 11:44:40,945][INFO] closealternative 1 + 1 != 2
+[2014-09-08 11:44:40,946][INFO] closealternative 2 + 0 != 2
+[2014-09-08 11:44:40,947][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:44:40,948][INFO] closealternative 1 + 0 != 1
+[2014-09-08 11:44:40,949][INFO] closealternative 0 + 2 != 2
+[2014-09-08 11:44:40,950][INFO] closealternative 1 + 1 != 2
+[2014-09-08 11:44:40,951][INFO] closealternative 2 + 0 != 2
+[2014-09-08 11:44:40,953][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:44:40,954][INFO] closealternative 1 + 0 != 1
+[2014-09-08 11:44:40,955][INFO] closealternative 0 + 2 != 2
+[2014-09-08 11:44:40,956][INFO] closealternative 1 + 1 != 2
+[2014-09-08 11:44:40,957][INFO] closealternative 2 + 0 != 2
+[2014-09-08 11:44:40,958][INFO] closealternative 0 + 3 != 3
+[2014-09-08 11:44:40,959][INFO] closealternative 1 + 2 != 3
+[2014-09-08 11:44:40,960][INFO] closealternative 2 + 1 != 3
+[2014-09-08 11:44:40,961][INFO] closealternative 3 + 0 != 3
+[2014-09-08 11:44:56,265][INFO] closealternative ============================
+[2014-09-08 11:44:56,266][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:44:56,267][INFO] closealternative 1 + 0 != 1
+[2014-09-08 11:45:03,486][INFO] closealternative ============================
+[2014-09-08 11:45:03,487][INFO] closealternative 0 + 2 != 2
+[2014-09-08 11:45:03,488][INFO] closealternative 1 + 1 != 2
+[2014-09-08 11:45:03,492][INFO] closealternative 2 + 0 != 2
+[2014-09-08 11:45:09,731][INFO] closealternative ============================
+[2014-09-08 11:45:09,732][INFO] closealternative 0 + 3 != 3
+[2014-09-08 11:45:09,734][INFO] closealternative 1 + 2 != 3
+[2014-09-08 11:45:09,736][INFO] closealternative 2 + 1 != 3
+[2014-09-08 11:45:09,738][INFO] closealternative 3 + 0 != 3
+[2014-09-08 11:47:29,161][INFO] closealternative ============================
+[2014-09-08 11:47:29,162][INFO] closealternative 0 + 1 != 1
+[2014-09-08 11:47:29,164][INFO] closealternative 1 + 0 != 1
+[2014-09-08 12:00:59,887][DEBUG] closealternative ============================
+[2014-09-08 12:00:59,887][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:01:36,447][DEBUG] closealternative ============================
+[2014-09-08 12:01:36,447][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:01:36,448][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:02:12,800][DEBUG] closealternative ============================
+[2014-09-08 12:02:12,801][DEBUG] closealternative 0 + 2 != 2
+[2014-09-08 12:02:12,802][DEBUG] closealternative 1 + 1 != 2
+[2014-09-08 12:02:12,803][DEBUG] closealternative 2 + 0 != 2
+[2014-09-08 12:02:12,805][DEBUG] closealternative ============================
+[2014-09-08 12:02:12,805][DEBUG] closealternative 0 + 3 != 3
+[2014-09-08 12:02:12,806][DEBUG] closealternative 1 + 2 != 3
+[2014-09-08 12:02:12,807][DEBUG] closealternative 2 + 1 != 3
+[2014-09-08 12:02:12,808][DEBUG] closealternative 3 + 0 != 3
+[2014-09-08 12:02:13,259][DEBUG] closealternative ============================
+[2014-09-08 12:02:13,260][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:02:13,261][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:02:13,714][DEBUG] closealternative ============================
+[2014-09-08 12:02:13,715][DEBUG] closealternative 0 + 2 != 2
+[2014-09-08 12:02:13,717][DEBUG] closealternative 1 + 1 != 2
+[2014-09-08 12:02:13,720][DEBUG] closealternative 2 + 0 != 2
+[2014-09-08 12:02:13,721][DEBUG] closealternative ============================
+[2014-09-08 12:02:13,723][DEBUG] closealternative 0 + 3 != 3
+[2014-09-08 12:02:13,724][DEBUG] closealternative 1 + 2 != 3
+[2014-09-08 12:02:13,726][DEBUG] closealternative 2 + 1 != 3
+[2014-09-08 12:02:13,727][DEBUG] closealternative 3 + 0 != 3
+[2014-09-08 12:04:46,860][DEBUG] closealternative ============================
+[2014-09-08 12:04:46,860][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:04:46,862][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:05:09,518][DEBUG] closealternative ============================
+[2014-09-08 12:05:09,519][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:05:09,520][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:05:47,917][DEBUG] closealternative ============================
+[2014-09-08 12:05:47,917][DEBUG] closealternative 0 + 2 != 2
+[2014-09-08 12:05:47,918][DEBUG] closealternative 1 + 1 != 2
+[2014-09-08 12:05:47,919][DEBUG] closealternative 2 + 0 != 2
+[2014-09-08 12:05:47,921][DEBUG] closealternative ============================
+[2014-09-08 12:05:47,923][DEBUG] closealternative 0 + 3 != 3
+[2014-09-08 12:05:47,924][DEBUG] closealternative 1 + 2 != 3
+[2014-09-08 12:05:47,926][DEBUG] closealternative 2 + 1 != 3
+[2014-09-08 12:05:47,927][DEBUG] closealternative 3 + 0 != 3
+[2014-09-08 12:09:34,060][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,061][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:09:34,062][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:09:34,063][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,064][DEBUG] closealternative 0 + 2 != 2
+[2014-09-08 12:09:34,064][DEBUG] closealternative 1 + 1 != 2
+[2014-09-08 12:09:34,066][DEBUG] closealternative 2 + 0 != 2
+[2014-09-08 12:09:34,067][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,068][DEBUG] closealternative 0 + 3 != 3
+[2014-09-08 12:09:34,069][DEBUG] closealternative 1 + 2 != 3
+[2014-09-08 12:09:34,071][DEBUG] closealternative 2 + 1 != 3
+[2014-09-08 12:09:34,072][DEBUG] closealternative 3 + 0 != 3
+[2014-09-08 12:09:34,072][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,073][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:09:34,074][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:09:34,075][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,075][DEBUG] closealternative 0 + 2 != 2
+[2014-09-08 12:09:34,076][DEBUG] closealternative 1 + 1 != 2
+[2014-09-08 12:09:34,077][DEBUG] closealternative 2 + 0 != 2
+[2014-09-08 12:09:34,078][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,078][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:09:34,079][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:09:34,080][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,080][DEBUG] closealternative 0 + 2 != 2
+[2014-09-08 12:09:34,081][DEBUG] closealternative 1 + 1 != 2
+[2014-09-08 12:09:34,082][DEBUG] closealternative 2 + 0 != 2
+[2014-09-08 12:09:34,083][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,083][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:09:34,085][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:09:34,086][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,087][DEBUG] closealternative 0 + 2 != 2
+[2014-09-08 12:09:34,087][DEBUG] closealternative 1 + 1 != 2
+[2014-09-08 12:09:34,089][DEBUG] closealternative 2 + 0 != 2
+[2014-09-08 12:09:34,090][DEBUG] closealternative ============================
+[2014-09-08 12:09:34,091][DEBUG] closealternative 0 + 3 != 3
+[2014-09-08 12:09:34,092][DEBUG] closealternative 1 + 2 != 3
+[2014-09-08 12:09:34,093][DEBUG] closealternative 2 + 1 != 3
+[2014-09-08 12:09:34,094][DEBUG] closealternative 3 + 0 != 3
+[2014-09-08 12:09:53,461][DEBUG] closealternative ============================
+[2014-09-08 12:09:53,461][DEBUG] closealternative 0 + 1 != 1
+[2014-09-08 12:09:53,462][DEBUG] closealternative 10 improvement
+[2014-09-08 12:09:53,463][DEBUG] closealternative 1 + 0 != 1
+[2014-09-08 12:09:53,464][DEBUG] closealternative 5 improvement

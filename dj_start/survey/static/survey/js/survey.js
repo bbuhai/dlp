@@ -1,26 +1,24 @@
 (function($){
     $(document).ready(function(){
         var alternative_path = $('#alternative'),
-            url = alternative_path.attr('data-url')
+            url = alternative_path.attr('data-url'),
             loader = $('#loader');
-
+        console.log('score='+alternative_path.attr('data-score'));
 
         var compute = function() {
             $.ajax({
                 url: url,
                 method: 'GET',
                 success: function(xhr) {
-                    loader.hide();
-                    console.log(xhr);
                     alternative_path.html(xhr);
                 },
-                error: function(xhr) {
-                    console.log(xhr);
+                error: function(err) {
+                    console.log(err);
                 }
             })
         };
 
-        setTimeout(compute, 1500)
+        setTimeout(compute, 1)
         
     });
 }(jQuery))
