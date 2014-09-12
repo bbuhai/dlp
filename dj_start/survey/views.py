@@ -1,5 +1,4 @@
 from math import ceil
-from itertools import chain
 import logging
 
 from django.shortcuts import (render, HttpResponseRedirect,
@@ -8,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.base import View
 
 from survey.models import Survey, Question, Answer, Page, Result
-from closealternative import DiscoverPath, AnsTuple
+from closealternative import compute_closest_alternatives, AnsTuple
 
 
 logger = logging.getLogger(__name__)
@@ -27,6 +26,16 @@ class ListView(View):
     template_name = 'survey/list.html'
 
     def get(self, request, page=1, limit=3):
+        """Display a list with all the surveys available.
+
+        Page and limit params are used to implement a basic pagination.
+        I did not use the build-in pagination because it retrieves all the objects.
+
+        :param request:
+        :param page: numeric
+        :param limit: numeric
+        :return:
+        """
         page = int(page)
         limit = int(limit)
         offset = (page - 1) * limit
@@ -54,17 +63,29 @@ class SurveyView(View):
     SURVEY_PAGE = 'survey_page'
 
     def get(self, request, survey_id, page=1):
+        """Renders a specific survey page.
+
+        Store in session the survey_page (current page) and the ids of the answers.
+        The survey_page is used to restrict the user (skip ahead in the survey).
+        The answer ids is used later to compute a close result alternative.
+
+        :param request:
+        :param survey_id: numeric
+        :param page: numeric
+        :return:
+        """
         survey = get_object_or_404(Survey, pk=survey_id)
         page = int(page)
-        next_page = Page.get_next_page(survey_id, page)
         session_page = request.session.get(self.SURVEY_PAGE, 1)
+
         if page != session_page:
-            #return HttpResponseRedirect(reverse('survey:survey', args=(survey_id, session_page)))
-            pass
+            return HttpResponseRedirect(reverse('survey:survey', args=(survey_id, session_page)))
+
         if page == 1:
             request.session['answers'] = []
 
         questions = Question.objects.filter(page__page_num=page, page__survey=survey_id)
+        next_page = Page.get_next_page(survey_id, page)
 
         context = {
             'survey': survey,
@@ -75,10 +96,21 @@ class SurveyView(View):
         return render(request, self.template_name, context)
 
     def post(self, request, survey_id, page=1):
+        """ Handle user survey answers.
+
+        Make sure that all questions were answered.
+        If all are answered then proceed to the next page or to the results page.
+        If not, redisplay the page, with the questions marked.
+
+        :param request:
+        :param survey_id: numeric
+        :param page: numeric
+        :return:
+        """
         questions_on_page = Question.objects.filter(page__page_num=page, page__survey=survey_id)
         survey = get_object_or_404(Survey, pk=survey_id)
         unanswered_q = []
-        answered = []
+        answered_ids = []
         answers_so_far = request.session.get('answers', [])
         for q in questions_on_page:
             answer_ids_str = request.POST.getlist('question[{}]'.format(q.id))
@@ -91,7 +123,7 @@ class SurveyView(View):
 
             if answer_ids:
                 answers_so_far += answer_ids
-                answered += answer_ids
+                answered_ids += answer_ids
             else:
                 unanswered_q.append(q.id)
         next_page = Page.get_next_page(survey_id, page)
@@ -105,12 +137,14 @@ class SurveyView(View):
 
             else:
                 # finished the survey
+                del request.session[SurveyView.SURVEY_PAGE]
                 return HttpResponseRedirect(reverse('survey:result', args=(survey_id,)))
         # some questions were not answered
+        # so we're going to redisplay the same page
         questions = Question.objects.filter(page__page_num=page, page__survey=survey_id)
         context = {
             'unanswered': unanswered_q,
-            'answered': answered,
+            'answered': answered_ids,
             'survey': survey,
             'next_page': next_page,
             'questions': questions,
@@ -144,7 +178,7 @@ class ClosestPath(View):
         try:
             score = int(request.session.get('score', None))
         except TypeError:
-            return HttpResponse("no score")
+            raise Http404()
         next_result = Result.get_result_above(survey_id, score)
         prev_result = Result.get_result_below(survey_id, score)
         given_ans_ids = request.session.get('answers')
@@ -152,7 +186,10 @@ class ClosestPath(View):
         pages = Page.objects.filter(survey=survey_id)
         other_ans = {}
         given_ans = {}
-
+        # organize the answers by page and question
+        # and keep them split into answers the user has submitted
+        # and into answers the user has not submitted for that particular page and question
+        # this is useful when computing score improvements
         for page in pages:
             answers = Answer.objects.filter(question__page=page)
             given_ans[page.id] = {}
@@ -167,43 +204,13 @@ class ClosestPath(View):
                 else:
                     other_ans[page.id][ans.question.id].append(a)
 
-        d = DiscoverPath(score=score,
-                         next_result=next_result,
-                         prev_result=prev_result,
-                         answers=given_ans,
-                         other_answers=other_ans)
-        alternative = d.compute()
-        better, worse = self._prepare_result_for_display(alternative)
+        better, worse = compute_closest_alternatives(score=score,
+                                                     next_result=next_result,
+                                                     prev_result=prev_result,
+                                                     answers=given_ans,
+                                                     other_answers=other_ans)
         context = {
-            'txt': 'awesome response',
             'better': better,
             'worse': worse
         }
         return render(request, self.template_name, context)
-
-    def _prepare_result_for_display(self, alternative):
-        better = alternative.get('better', {})
-        better_prepared = {}
-        worse = alternative.get('worse', {})
-        worse_prepared = {}
-
-        question_ids = []
-        answer_ids = []
-        for w in chain(better.itervalues(), worse.itervalues()):
-            question_ids.append(w.q)
-            answer_ids += [a.id for a in w.add]
-            answer_ids += [a.id for a in w.rm]
-
-        questions = Question.objects.in_bulk(question_ids)
-        answers = Answer.objects.in_bulk(answer_ids)
-
-        for w in better.itervalues():
-            better_prepared[questions[w.q]] = {'add': [], 'rm': []}
-            better_prepared[questions[w.q]]['add'] = [answers[a.id] for a in w.add]
-            better_prepared[questions[w.q]]['rm'] = [answers[a.id] for a in w.rm]
-
-        for w in worse.itervalues():
-            worse_prepared[questions[w.q]] = {'add': [], 'rm': []}
-            worse_prepared[questions[w.q]]['add'] = [answers[a.id] for a in w.add]
-            worse_prepared[questions[w.q]]['rm'] = [answers[a.id] for a in w.rm]
-        return better_prepared, worse_prepared

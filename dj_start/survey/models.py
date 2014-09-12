@@ -3,9 +3,9 @@ import datetime
 from django.db import models
 
 
-def get_first_value(qset):
+def _get_first_value(q_set):
     try:
-        return qset[0]
+        return q_set[0]
     except IndexError:
         return None
 
@@ -13,7 +13,7 @@ def get_first_value(qset):
 class Survey(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(db_index=True)
 
     def __unicode__(self):
         return self.name
@@ -22,12 +22,14 @@ class Survey(models.Model):
         return self.__unicode__()
 
     def save(self, *args, **kwargs):
-        self.created_at = datetime.datetime.now()
+        if not self.id:
+            self.created_at = datetime.datetime.now()
         super(Survey, self).save(*args, **kwargs)
 
     def shorten_description(self, length=160):
-        if len(self.description) > length - 3:  # 3 for the ellipses
-            return self.description[:length] + '...'
+        max_length = length - 3
+        if len(self.description) > length:  # 3 for the ellipses
+            return self.description[:max_length] + '...'
         return self.description
 
     @classmethod
@@ -77,7 +79,7 @@ class Question(models.Model):
     page = models.ForeignKey(Page)
     question_text = models.CharField(max_length=300)
     position = models.IntegerField(help_text="Question order")
-    type = models.CharField(max_length=20, choices=TYPE_IN_CHOICES, default=SINGLE)
+    type = models.CharField(max_length=20, choices=TYPE_IN_CHOICES, default=MULTIPLE)
 
     def __unicode__(self):
         return self.question_text[:10]
@@ -123,16 +125,16 @@ class Result(models.Model):
     @classmethod
     def get_result(cls, survey_id, score):
         q = cls.objects.filter(survey=survey_id, max_score__gt=score, min_score__lte=score)
-        return get_first_value(q)
+        return _get_first_value(q)
 
     @classmethod
     def get_result_above(cls, survey_id, score):
         q = cls.objects.filter(survey=survey_id, min_score__gt=score).order_by('min_score')
-        return get_first_value(q)
+        return _get_first_value(q)
 
     @classmethod
     def get_result_below(cls, survey_id, score):
         q = cls.objects.filter(survey=survey_id, max_score__lt=score).order_by('-min_score')
-        return get_first_value(q)
+        return _get_first_value(q)
 
 

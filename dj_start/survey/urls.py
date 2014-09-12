@@ -1,13 +1,17 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 
 from survey import views
+
+survey_patterns = patterns('',
+    url(r'^$', views.SurveyView.as_view(), name='survey'),
+    url(r'^page/(?P<page>\d+)$', views.SurveyView.as_view(), name='survey'),
+    url(r'^result$', views.ResultView.as_view(), name='result'),
+    url(r'^closest_path$', views.ClosestPath.as_view(), name='closest')
+)
 
 urlpatterns = patterns('',
     url(r'^$', views.ListView.as_view(), name='list'),
     url(r'^page/(?P<page>\d+)$', views.ListView.as_view(), name='list'),
     url(r'^page/(?P<page>\d+)/limit/(?P<limit>\d+)$', views.ListView.as_view(), name='list'),
-    url(r'^(?P<survey_id>\d+)$', views.SurveyView.as_view(), name='survey'),
-    url(r'^(?P<survey_id>\d+)/page/(?P<page>\d+)$', views.SurveyView.as_view(), name='survey'),
-    url(r'^(?P<survey_id>\d+)/result$', views.ResultView.as_view(), name='result'),
-    url(r'^(?P<survey_id>\d+)/closest_path$', views.ClosestPath.as_view(), name='closest')
+    url(r'^(?P<survey_id>\d+)/', include(survey_patterns))
 )

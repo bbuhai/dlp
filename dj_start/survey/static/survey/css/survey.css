@@ -7,7 +7,10 @@
 }
 
 .survey-question {
-    margin: 20px;
+    margin: 10px;
+}
+.survey-answers {
+    margin-left: 20px;
 }
 
 .question-text {
@@ -53,4 +56,7 @@
 }
 .indent {
     margin-left: 20px;
+}
+.survey-page {
+    list-style-type: none;
 }

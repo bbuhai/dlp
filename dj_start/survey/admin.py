@@ -43,7 +43,7 @@ class AnswerInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ['id']
-    fields = ['id', 'page', 'question_text', 'position', 'type']
+    fields = ['page', 'question_text', 'position', 'type', 'id']
     inlines = [AnswerInline]
     list_display = ('id', 'question_text', 'page', 'position')
     search_fields = ['question_text']

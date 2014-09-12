@@ -11,9 +11,8 @@
         {% if unanswered %}
         <p class="bg-danger">You must answer all questions before moving to the next section.</p>
         {% endif %}
-        <ol>
+        <ul class="survey-page">
         {% for q in questions %}
-
         <li class="survey-question{% if q.id in unanswered %} text-danger{%endif%}"><span class="question-text">{{q.question_text}}</span>
             <div class="survey-answers">
             {% for ans in q.answer_set.all %}
@@ -28,7 +27,8 @@
             </div>
         </li>
         {% endfor %}
-        </ol>
+        </ul>
+        {% if questions %}
         <button type="submit" class="btn btn-info">
             {% if not next_page %}
                 Finish
@@ -36,5 +36,6 @@
                 Next
             {% endif %}
         </button>
+        {% endif %}
     </form>
 {% endblock %}

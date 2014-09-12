@@ -22,8 +22,8 @@ DATABASES = {
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'HOST': '',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',  # Set to empty string for default.
     }
 }
 
@@ -133,10 +133,13 @@ INSTALLED_APPS = (
     'survey',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'debug_toolbar',
+    # 'django_coverage',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
