@@ -11,5 +11,7 @@ survey_patterns = patterns('',
 
 urlpatterns = patterns('',
     url(r'^$', views.ListView.as_view(), name='list'),
+    url(r'^page/(?P<page>\d+)$', views.ListView.as_view(), name='list'),
+    url(r'^page/(?P<page>\d+)/limit/(?P<limit>\d+)$', views.ListView.as_view(), name='list'),
     url(r'^(?P<survey_id>\d+)', include(survey_patterns))
 )

@@ -2,10 +2,9 @@ from math import ceil
 import logging
 
 from django.shortcuts import (render, HttpResponseRedirect,
-                              Http404, get_object_or_404)
+                              Http404, get_object_or_404, HttpResponse)
 from django.core.urlresolvers import reverse
 from django.views.generic.base import View
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from survey.models import Survey, Question, Answer, Page, Result
 from closealternative import compute_closest_alternatives, AnsTuple
@@ -26,32 +25,34 @@ def get_pages(num_elements, limit):
 class ListView(View):
     template_name = 'survey/list.html'
 
-    def get(self, request):
+    def get(self, request, page=1, limit=3):
         """Display a list with all the surveys available.
 
-        The results are paged.
+        Page and limit params are used to implement a basic pagination.
+        I did not use the build-in pagination because it retrieves all the objects.
 
         :param request:
+        :param page: numeric
+        :param limit: numeric
         :return:
         """
-        page = request.GET.get('page', 1)
-        limit = 3
+        page = int(page)
+        limit = int(limit)
+        offset = (page - 1) * limit
+        surveys = Survey.get_objects(limit, offset)
 
-        all_surveys = Survey.objects.all()
-        paginator = Paginator(all_surveys, limit)
+        if not surveys:
+            raise Http404
 
-        try:
-            surveys = paginator.page(page)
-        except PageNotAnInteger:
-            surveys = paginator.page(1)
-        except EmptyPage:
-            surveys = paginator.page(paginator.num_pages)
-
-        start_at = (surveys.number - 1) * limit + 1
-
+        num_surveys = Survey.get_num_surveys()
+        count_start = offset + 1
+        pages = get_pages(num_surveys, limit)
         context = {
             'surveys': surveys,
-            'start_at': start_at
+            'current_page': page,
+            'count_start': count_start,
+            'pages': pages,
+            'limit': limit
         }
 
         return render(request, self.template_name, context)

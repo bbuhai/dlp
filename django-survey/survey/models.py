@@ -58,8 +58,11 @@ class Page(models.Model):
     @classmethod
     def get_next_page(cls, survey_id, page_num):
         query = cls.objects.filter(survey=survey_id, page_num__gt=page_num).order_by('page_num')
-        page = _get_first_value(query)
-        return page.page_num if page else None
+        try:
+            page = query[0]
+        except IndexError:
+            return None
+        return page.page_num
 
     class Meta:
         unique_together = ('page_num', 'survey')

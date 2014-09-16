@@ -105,6 +105,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #'survey.middleware.SqlLoggingMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -131,7 +132,6 @@ INSTALLED_APPS = (
     'personalitytests',
     'contact',
     'survey',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'debug_toolbar',
     # 'django_coverage',
@@ -139,7 +139,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
-TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+#TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+#APPEND_SLASH = False
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -154,6 +155,9 @@ LOGGING = {
         },
         'verbose': {
             'format': '[%(asctime)s][%(levelname)s] %(module)s %(message)s'
+        },
+        'sql': {
+            'format': '[%(asctime)s] %(message)s'
         }
     },
     'filters': {
@@ -177,6 +181,12 @@ LOGGING = {
             'filename': normpath(join(SITE_ROOT, 'log.txt')),
             'formatter': 'verbose'
         },
+        'file-sql': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': normpath(join(SITE_ROOT, 'sql-log.txt')),
+            'formatter': 'sql'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -196,6 +206,10 @@ LOGGING = {
         },
         'survey': {
             'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+        'survey-sql': {
+            'handlers': ['file-sql'],
             'level': 'DEBUG'
         }
     }

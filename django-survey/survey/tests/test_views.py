@@ -17,31 +17,27 @@ class ListViewTest(TestCase):
         response = self.client.get('/survey/')
 
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['pages'], [1, 2])
         self.assertEqual(
             len(response.context['surveys']),
             3
         )
+        self.assertEqual(response.context['count_start'], 1)
+        self.assertEqual(response.context['current_page'], 1)
 
     def test_list_page_limit(self):
-        response = self.client.get('/survey/?page=2')
+        response = self.client.get('/survey/page/2/limit/2')
         num_surveys = len(response.context['surveys'])
 
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['count_start'], 3)
+        self.assertEqual(response.context['current_page'], 2)
         self.assertEqual(num_surveys, 2)
 
-    def test_list_default_first_page(self):
-        response = self.client.get('/survey/?page=notanumber')
-        num_surveys = len(response.context['surveys'])
+    def test_list_invalid_page_limit(self):
+        response = self.client.get('/survey/page/3/limit/5')
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(num_surveys, 3)
-
-    def test_list_empty_page_replaced_with_last(self):
-        response = self.client.get('/survey/?page=10')
-        num_surveys = len(response.context['surveys'])
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(num_surveys, 2)
+        self.assertEqual(response.status_code, 404)
 
 
 class SurveyViewTest(TestCase):

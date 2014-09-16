@@ -1,0 +1,7 @@
+include README.rst
+include LICENSE
+recursive-include survey/static *
+recursive-include survey/templates *.json 
+recursive-include survey/fixtures *
+recursive-exclude *.pyc
+recursive-exclude *.pyo
