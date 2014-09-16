@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
-#from personalitytests.models import Test as T
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dj_start.settings")
 

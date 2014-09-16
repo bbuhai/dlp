@@ -1,14 +1,14 @@
 # Django settings for dj_start project.
 from os.path import normpath, join, abspath, dirname
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Bogdan Buhai', 'bb@vm.com'),
+    ('Bogdan Buhai', 'bb@vm.com'),
 )
-########## PATH CONFIGURATION
-DJANGO_ROOT = dirname(abspath(__file__))
+# ######### PATH CONFIGURATION
+DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 SITE_ROOT = dirname(DJANGO_ROOT)
 ########## END PATH CONFIGURATION
 
@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': normpath(join(SITE_ROOT, 'initial.db')),
 
         # The following settings are not used with sqlite3:
@@ -29,7 +29,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -86,7 +86,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -96,7 +96,7 @@ SECRET_KEY = '0n!^u5sk@g30g7p5pn=47b6)tl@8f_ecclr4_cm)sp6$t^)q_!'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -140,7 +140,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
-#TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 #APPEND_SLASH = False
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
