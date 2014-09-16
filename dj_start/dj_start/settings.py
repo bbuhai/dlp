@@ -5,7 +5,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Bogdan Buhai', 'bogdan.buhai@3pillarglobal.com'),
+     ('Bogdan Buhai', 'bb@vm.com'),
 )
 ########## PATH CONFIGURATION
 DJANGO_ROOT = dirname(abspath(__file__))
