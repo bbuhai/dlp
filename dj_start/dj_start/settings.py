@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'personalitytests',
     'contact',
     'survey',
+    'accounts',
     'django.contrib.admin',
     'debug_toolbar',
     # 'django_coverage',

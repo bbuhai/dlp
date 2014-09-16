@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+{% block headerlinks %}
+{% endblock %}
+{% block menu %}
+{% endblock %}
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form class="form-horizontal form-login" role="form" method="post" action="{% url 'accounts:login' %}">
+{% csrf_token %}
+<div class="form-group">
+    <input type="text" name="username" class="form-control" id="username" placeholder="Username" value="{{form.data.username}}">
+</div>
+<div class="form-group">
+    <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="">
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-4">
+        <button type="submit" class="btn btn-default">Sign in</button>
+        or
+        <a href="{% url 'accounts:create' %}">Create an account</a>
+    </div>
+</div>
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}

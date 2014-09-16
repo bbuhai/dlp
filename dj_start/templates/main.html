@@ -12,6 +12,18 @@
 <body>
 <div class="container">
     <header class="header">
+        <div class="header-links">
+            {% block headerlinks %}
+                {% if user.is_authenticated %}
+                <form class="inline-block" method="POST" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button class="btn btn-link" type="submit">Logout</button>
+                </form>
+                {% else %}
+                <a href="{% url 'accounts:login' %}" class="btn btn-link" type="submit">Login</a>
+                {% endif %}
+            {% endblock %}
+        </div>
         <p class="header-txt">NICE HEADER</p>
     </header>
     <nav>

@@ -6,6 +6,8 @@ from django.shortcuts import (render, HttpResponseRedirect,
 from django.core.urlresolvers import reverse
 from django.views.generic.base import View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
 
 from survey.models import Survey, Question, Answer, Page, Result
 from closealternative import compute_closest_alternatives, AnsTuple
@@ -57,9 +59,17 @@ class ListView(View):
         return render(request, self.template_name, context)
 
 
+def test_me(user):
+    return True
+
+
 class SurveyView(View):
     template_name = 'survey/survey.html'
     SURVEY_PAGE = 'survey_page'
+
+    @method_decorator(user_passes_test(test_func=test_me))
+    def dispatch(self, request, *args, **kwargs):
+        return super(SurveyView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, survey_id, page=1):
         """Renders a specific survey page.

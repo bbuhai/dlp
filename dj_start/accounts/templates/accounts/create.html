@@ -1,0 +1,12 @@
+{% extends "main.html" %}
+{% block menu %}
+{% endblock %}
+{% block content %}
+<div class="bg-danger">
+    This is not functional.
+</div>
+{% if form.errors %}
+<p>Something went wrong while trying to create your account.</p>
+{% endif %}
+{{form.as_p}}
+{% endblock %}

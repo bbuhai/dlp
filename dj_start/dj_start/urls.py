@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'^contact/$', include('contact.urls'), name="contact"),
     url(r'^test/', include('personalitytests.urls', namespace='pers')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^survey/', include('survey.urls', namespace='survey'))
+    url(r'^survey/', include('survey.urls', namespace='survey')),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts'))
 )

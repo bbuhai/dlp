@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url, include
+from django.contrib.auth.views import login
 
 from survey import views
 
@@ -11,5 +12,5 @@ survey_patterns = patterns('',
 
 urlpatterns = patterns('',
     url(r'^$', views.ListView.as_view(), name='list'),
-    url(r'^(?P<survey_id>\d+)', include(survey_patterns))
+    url(r'^(?P<survey_id>\d+)', include(survey_patterns)),
 )
