@@ -134,8 +134,6 @@ INSTALLED_APPS = (
     'survey',
     'accounts',
     'django.contrib.admin',
-    'debug_toolbar',
-    # 'django_coverage',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
