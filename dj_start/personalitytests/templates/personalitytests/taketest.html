@@ -40,5 +40,6 @@
 {% endblock %}
 
 {% block asyncjs %}
-<script type="text/javascript" src="{% static 'personalitytests/js/main.js' %}"></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'personalitytests/js/main.js' %}"></script>
 {% endblock %}

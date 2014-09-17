@@ -1,8 +1,5 @@
-{% extends "main.html" %}
-{% load site_menu staticfiles%}
-{% block menu %}
-    {% site_menu item=3 %}
-{% endblock %}
+{% extends "survey/base.html" %}
+{% load staticfiles%}
 {% block content %}
     <h4 class="font-22">Your result:</h4>
     <div class="result bg-info">
@@ -25,5 +22,6 @@
     </div>
 {% endblock %}
 {% block asyncjs%}
+    {{ block.super }}
     <script type="text/javascript" src="{% static 'survey/js/survey.js' %}"></script>
 {% endblock %}

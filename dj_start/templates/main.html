@@ -4,9 +4,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Dj</title>
-    <link href="{% static 'personalitytests/css/main.css' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'survey/css/survey.css' %}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    {% block css %}
+        <link href="{% static 'personalitytests/css/main.css' %}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    {% endblock %}
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}" />
 </head>
 <body>
@@ -53,9 +54,9 @@
         really nice footer
     </footer>
 </div>
+{% block asyncjs %}
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-{% block asyncjs %}
 {% endblock %}
 </body>
 </html>
