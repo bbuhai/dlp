@@ -61,8 +61,7 @@ def compute_closest_alternatives(score, next_result, prev_result, answers, other
 
 
 def _extract_worst(n, lst):
-    """Try to remove the smallest elements from a list and
-    return them if the sum of the remaining is bigger than before.
+    """Returns the n smallest AnsTuples from a list.
     >>> lst = [AnsTuple(1, -10), AnsTuple(2, 0), AnsTuple(3, 10), AnsTuple(4, -1)]
     >>> _extract_worst(3, lst)
     [AnsTuple(id=1, score=-10), AnsTuple(id=4, score=-1), AnsTuple(id=2, score=0)]
@@ -74,8 +73,7 @@ def _extract_worst(n, lst):
 
 
 def _extract_best(n, lst):
-    """Try to remove the largest elements from a list and
-    return them if the sum of the remaining is smaller than before.
+    """Returns the n largest AnsTuples from a list.
     >>> lst = [AnsTuple(1, -10), AnsTuple(2, 0), AnsTuple(3, -20), AnsTuple(4, -1)]
     >>> _extract_best(2, lst)
     [AnsTuple(id=2, score=0), AnsTuple(id=4, score=-1)]
@@ -213,13 +211,13 @@ class DiscoverPath(object):
         :return: dict
         """
         best = None
-        bestW = None
+        fewest_changes = None
         for changes in all_changes:
             s = sum(w.val for w in changes.itervalues())
             if best is None or s < best:
                 best = s
-                bestW = changes
-        return bestW
+                fewest_changes = changes
+        return fewest_changes
 
     def _weight_all(self):
         """Loop though all the pages and questions

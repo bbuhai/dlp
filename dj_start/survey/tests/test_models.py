@@ -13,18 +13,6 @@ def create_surveys(num=5):
 class SurveyTest(TestCase):
     fixtures = ['survey_test.json']
 
-    def test_get_objects_len(self):
-        objs = Survey.get_objects(offset=0, limit=3)
-        self.assertEqual(len(objs), 3)
-
-    def test_get_objects_offset_big(self):
-        objs = Survey.get_objects(offset=10, limit=3)
-        self.assertFalse(objs)
-
-    def test_get_num_surveys(self):
-        num = Survey.get_num_surveys()
-        self.assertEqual(num, 5)
-
     def test_shorten_description(self):
         s = Survey.objects.get(pk=1)
         description = s.shorten_description(6)
@@ -51,11 +39,11 @@ class PageTest(TestCase):
     fixtures = ['survey_test.json', 'page_test.json']
 
     def test_get_next_page(self):
-        next_page = Page.get_next_page(1, 1)
+        next_page = Page.objects.get_next_page(1, 1)
         self.assertEqual(2, next_page)
 
     def test_get_next_page_last(self):
-        next_page = Page.get_next_page(1, 2)
+        next_page = Page.objects.get_next_page(1, 2)
         self.assertIsNone(next_page)
 
 
@@ -64,7 +52,7 @@ class AnswerTest(TestCase):
 
     def test_get_score_sum(self):
         # 1->-5, 4->0, 8->10, 9->1, 13->0
-        score = Answer.get_score_sum(1, [1, 4, 8, 9, 13])
+        score = Answer.objects.get_score_sum([1, 4, 8, 9, 13])
         self.assertEqual(score, 6)
 
 
@@ -73,39 +61,39 @@ class ResultTest(TestCase):
                 'question_test.json', 'answers_test.json', 'results_test.json']
 
     def test_get_result(self):
-        result = Result.get_result(survey_id=1, score=-5)
+        result = Result.objects.get_result(survey_id=1, score=-5)
 
         self.assertIsInstance(result, Result)
         self.assertEqual(result.min_score, -9)
         self.assertEqual(result.max_score, 0)
 
     def test_get_result_limit(self):
-        result = Result.get_result(survey_id=1, score=0)
+        result = Result.objects.get_result(survey_id=1, score=0)
 
         self.assertIsInstance(result, Result)
         self.assertEqual(result.min_score, 0)
         self.assertEqual(result.max_score, 14)
 
     def test_get_result_above(self):
-        result = Result.get_result_above(survey_id=1, score=10)
+        result = Result.objects.get_result_above(survey_id=1, score=10)
 
         self.assertIsInstance(result, Result)
         self.assertEqual(result.max_score, 34)
         self.assertEqual(result.min_score, 14)
 
     def test_get_result_above_none(self):
-        result = Result.get_result_above(survey_id=1, score=40)
+        result = Result.objects.get_result_above(survey_id=1, score=40)
 
         self.assertIsNone(result)
 
     def test_get_result_below(self):
-        result = Result.get_result_below(survey_id=1, score=1)
+        result = Result.objects.get_result_below(survey_id=1, score=1)
 
         self.assertIsInstance(result, Result)
         self.assertEqual(result.max_score, 0)
         self.assertEqual(result.min_score, -9)
 
     def test_get_result_below_none(self):
-        result = Result.get_result_below(1, score=0)
+        result = Result.objects.get_result_below(1, score=0)
 
         self.assertIsNone(result)

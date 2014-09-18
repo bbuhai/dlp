@@ -2,12 +2,8 @@ import datetime
 
 from django.db import models
 
-
-def _get_first_value(q_set):
-    try:
-        return q_set[0]
-    except IndexError:
-        return None
+from survey.utils import get_first_value
+from survey import managers
 
 
 class Survey(models.Model):
@@ -32,15 +28,6 @@ class Survey(models.Model):
             return self.description[:max_length] + '...'
         return self.description
 
-    @classmethod
-    def get_objects(cls, limit, offset):
-        end = offset + limit
-        return cls.objects.all()[offset:end]
-
-    @classmethod
-    def get_num_surveys(cls):
-        return cls.objects.count()
-
     class Meta:
         ordering = ['-created_at']
 
@@ -49,17 +36,13 @@ class Page(models.Model):
     page_num = models.PositiveIntegerField()
     survey = models.ForeignKey(Survey)
 
+    objects = managers.DefaultPageManager()
+
     def __unicode__(self):
         return "Pg {} from {}".format(self.page_num, self.survey)
 
     def __str__(self):
         return self.__unicode__()
-
-    @classmethod
-    def get_next_page(cls, survey_id, page_num):
-        query = cls.objects.filter(survey=survey_id, page_num__gt=page_num).order_by('page_num')
-        page = _get_first_value(query)
-        return page.page_num if page else None
 
     class Meta:
         unique_together = ('page_num', 'survey')
@@ -93,17 +76,13 @@ class Answer(models.Model):
     answer_text = models.CharField(max_length=200)
     score = models.IntegerField()
 
+    objects = managers.DefaultAnswerManager()
+
     def __unicode__(self):
         return self.answer_text[:10]
 
     def __str__(self):
         return self.__unicode__()
-
-    @classmethod
-    def get_score_sum(cls, survey_id, answer_ids):
-        q = cls.objects.filter(question__page__survey=survey_id,
-                               id__in=answer_ids).aggregate(total=models.Sum('score'))
-        return q['total']
 
 
 class Result(models.Model):
@@ -113,25 +92,10 @@ class Result(models.Model):
     min_score = models.IntegerField()
     max_score = models.IntegerField()
 
+    objects = managers.DefaultResultManager()
+
     def __unicode__(self):
         return self.summary[:10]
 
     def __str__(self):
         return self.__unicode__()
-
-    @classmethod
-    def get_result(cls, survey_id, score):
-        q = cls.objects.filter(survey=survey_id, max_score__gt=score, min_score__lte=score)
-        return _get_first_value(q)
-
-    @classmethod
-    def get_result_above(cls, survey_id, score):
-        q = cls.objects.filter(survey=survey_id, min_score__gt=score).order_by('min_score')
-        return _get_first_value(q)
-
-    @classmethod
-    def get_result_below(cls, survey_id, score):
-        q = cls.objects.filter(survey=survey_id, max_score__lt=score).order_by('-min_score')
-        return _get_first_value(q)
-
-

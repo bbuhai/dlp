@@ -94,7 +94,7 @@ class SurveyView(View):
             request.session['answers'] = []
 
         questions = Question.objects.filter(page__page_num=page, page__survey=survey_id)
-        next_page = Page.get_next_page(survey_id, page)
+        next_page = Page.objects.get_next_page(survey_id, page)
 
         context = {
             'survey': survey,
@@ -135,7 +135,7 @@ class SurveyView(View):
                 answered_ids += answer_ids
             else:
                 unanswered_q.append(q.id)
-        next_page = Page.get_next_page(survey_id, page)
+        next_page = Page.objects.get_next_page(survey_id, page)
 
         if len(unanswered_q) == 0:
             request.session['answers'] = answers_so_far
@@ -166,10 +166,10 @@ class ResultView(View):
 
     def get(self, request, survey_id):
         answer_ids = request.session.get('answers', [])
-        score = Answer.get_score_sum(survey_id, answer_ids)
+        score = Answer.objects.get_score_sum(answer_ids)
         request.session['score'] = score
 
-        result = Result.get_result(survey_id, score)
+        result = Result.objects.get_result(survey_id, score)
         context = {
             'result': result,
             'score': score,
@@ -187,8 +187,8 @@ class ClosestPath(View):
             score = int(request.session.get('score', None))
         except TypeError:
             raise Http404()
-        next_result = Result.get_result_above(survey_id, score)
-        prev_result = Result.get_result_below(survey_id, score)
+        next_result = Result.objects.get_result_above(survey_id, score)
+        prev_result = Result.objects.get_result_below(survey_id, score)
         given_ans_ids = request.session.get('answers')
 
         pages = Page.objects.filter(survey=survey_id)
