@@ -1,3 +1,4 @@
 .idea/
 *.pyc
 dj_start/.coverage
+django-survey/django_survey.egg-info
