@@ -1,4 +1,7 @@
 .idea/
 *.pyc
-dj_start/.coverage
 *.egg-info/
+
+dj_start/.coverage
+dj_start/sql-log.txt
+dj_start/log.txt
