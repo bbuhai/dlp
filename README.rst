@@ -16,21 +16,21 @@ Quick start
 
 3. Run::
 
-    python manage.py syncdb --settings=dj_start.settings.prod
+    python manage.py syncdb --settings=dj_start.settings.local
 
 4. Load fixtures with::
 
-    python manage.py loaddata survey.json --settings=dj_start.settings.prod
+    python manage.py loaddata survey.json --settings=dj_start.settings.local
 
 5. Start the server with::
 
-    python manage.py runserver --settings=dj_start.settings.prod
+    python manage.py runserver --settings=dj_start.settings.local
 
 6. Go to `your website http://127.0.0.1:8000/survey/`_ and do the *Survey #1*
 
 
 Running the tests::
 
-    python manage.py test survey --settings=dj_start.settings.test
+    python manage.py test survey --settings=dj_start.settings.local
 
 
