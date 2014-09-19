@@ -7,8 +7,7 @@ from survey.models import Result
 
 
 class ListViewTest(TestCase):
-    fixtures = ['survey_test.json', 'page_test.json',
-                'question_test.json', 'answers_test.json', 'results_test.json']
+    fixtures = ['survey.json']
 
     def setUp(self):
         self.client = Client()
@@ -45,8 +44,7 @@ class ListViewTest(TestCase):
 
 
 class SurveyViewTest(TestCase):
-    fixtures = ['survey_test.json', 'page_test.json',
-                'question_test.json', 'answers_test.json', 'results_test.json']
+    fixtures = ['survey.json']
 
     def setUp(self):
         self.c = Client()
@@ -124,8 +122,7 @@ class SurveyViewTest(TestCase):
 
 
 class ResultViewTest(TestCase):
-    fixtures = ['survey_test.json', 'page_test.json',
-                'question_test.json', 'answers_test.json', 'results_test.json']
+    fixtures = ['survey.json']
 
     def setUp(self):
         self.c = Client()

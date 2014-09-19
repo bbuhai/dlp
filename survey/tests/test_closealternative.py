@@ -4,8 +4,7 @@ from survey.models import Result, Question
 
 
 class ComputeClosestAlternativesTest(TestCase):
-    fixtures = ['survey_test.json', 'page_test.json',
-                'question_test.json', 'answers_test.json', 'results_test.json']
+    fixtures = ['survey.json']
 
     def test_closest_alternatives(self):
         next_result = get_next_result()

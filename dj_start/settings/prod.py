@@ -1,0 +1,1 @@
+from dj_start.settings.base import *

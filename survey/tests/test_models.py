@@ -11,7 +11,7 @@ def create_surveys(num=5):
 
 
 class SurveyTest(TestCase):
-    fixtures = ['survey_test.json']
+    fixtures = ['survey.json']
 
     def test_shorten_description(self):
         s = Survey.objects.get(pk=1)
@@ -36,7 +36,7 @@ class SurveyTest(TestCase):
 
 
 class PageTest(TestCase):
-    fixtures = ['survey_test.json', 'page_test.json']
+    fixtures = ['survey.json']
 
     def test_get_next_page(self):
         next_page = Page.objects.get_next_page(1, 1)
@@ -48,7 +48,7 @@ class PageTest(TestCase):
 
 
 class AnswerTest(TestCase):
-    fixtures = ['survey_test.json', 'page_test.json', 'question_test.json', 'answers_test.json']
+    fixtures = ['survey.json']
 
     def test_get_score_sum(self):
         # 1->-5, 4->0, 8->10, 9->1, 13->0
@@ -57,8 +57,7 @@ class AnswerTest(TestCase):
 
 
 class ResultTest(TestCase):
-    fixtures = ['survey_test.json', 'page_test.json',
-                'question_test.json', 'answers_test.json', 'results_test.json']
+    fixtures = ['survey.json']
 
     def test_get_result(self):
         result = Result.objects.get_result(survey_id=1, score=-5)
