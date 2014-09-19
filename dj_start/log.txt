@@ -1,2 +1,0 @@
-[2014-09-15 10:50:52,666][DEBUG] middleware one query here!!
-[2014-09-15 10:51:03,658][DEBUG] middleware one query here!!

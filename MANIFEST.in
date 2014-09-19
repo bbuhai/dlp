@@ -1,11 +1,11 @@
 include README.rst
 include LICENSE
-exclude dj_start/.coverage
-exclude dj_start/log.txt
-exclude dj_start/sql-log.txt
-recursive-include dj_start/static *
-recursive-include dj_start/templates *
-recursive-include dj_start/*/fixtures *.json
-recursive-include dj_start/*/templates *
+exclude .coverage
+exclude log.txt
+exclude sql-log.txt
+recursive-include static *
+recursive-include templates *
+recursive-include */fixtures *.json
+recursive-include */templates *
 recursive-exclude *.pyc
 recursive-exclude *.pyo

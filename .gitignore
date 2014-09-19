@@ -2,6 +2,7 @@
 *.pyc
 *.egg-info/
 
-dj_start/.coverage
-dj_start/sql-log.txt
-dj_start/log.txt
+.coverage
+sql-log.txt
+log.txt
+initial.db
