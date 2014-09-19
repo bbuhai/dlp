@@ -2,7 +2,6 @@ import datetime
 
 from django.db import models
 
-from survey.utils import get_first_value
 from survey import managers
 
 
