@@ -6,16 +6,21 @@ A small django project built for learning purposes.
 
 Quick start
 -----------
-1. Run::
+1. Create a virtualenv.
+2. Install the project::
 
-    python manage.py syncdb
+    pip install <path_to_dj_start_tag.gz>
 
-2. Load fixtures with::
+3. Run::
+
+    python manage.py syncdb --settings=dj_start.settings.prod
+
+4. Load fixtures with::
 
     python manage.py loaddata survey.json
 
-3. Start the server with::
+5. Start the server with::
 
-    python manage.py runserver --settings=dj_start.settings.local
+    python manage.py runserver --settings=dj_start.settings.prod
 
-3. Enjoy
+6. Enjoy
