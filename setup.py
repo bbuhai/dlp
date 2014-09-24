@@ -12,8 +12,6 @@ dependencies = (
     'argparse==1.2.1',
     'sqlparse==0.1.11',
     'wsgiref==0.1.2',
-    'coverage==3.7.1',
-    'django-coverage==1.2.4',
     'django-debug-toolbar==1.2.1',
     'factory-boy==2.4.1'
 )
