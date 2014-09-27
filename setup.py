@@ -13,7 +13,8 @@ dependencies = (
     'sqlparse==0.1.11',
     'wsgiref==0.1.2',
     'django-debug-toolbar==1.2.1',
-    'factory-boy==2.4.1'
+    'factory-boy==2.4.1',
+    'south==1'
 )
 
 setup(
