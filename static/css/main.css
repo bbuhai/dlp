@@ -76,3 +76,20 @@ div label {
 .inline-block {
     display: inline-block;
 }
+
+.form-create {
+    padding: 20px;
+    width: 660px;
+    margin: 0 auto;
+}
+
+.form-create .control-label {
+    width: 200px;
+}
+
+.form-create .errors {
+    padding: 20px 0 0 20px;
+    font-weight: bold;
+    width: 500px;
+    margin: 0 auto;
+}
