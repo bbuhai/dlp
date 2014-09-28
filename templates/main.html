@@ -17,6 +17,7 @@
         <div class="header-links">
             {% block headerlinks %}
                 {% if user.is_authenticated %}
+                <span>Welcome, <i>{{ user.username }}</i>.</span>
                 <form class="inline-block" method="POST" action="{% url 'accounts:logout' %}">
                     {% csrf_token %}
                     <button class="btn btn-link" type="submit">Logout</button>

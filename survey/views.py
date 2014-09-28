@@ -1,4 +1,3 @@
-from math import ceil
 import logging
 
 from django.shortcuts import (render, HttpResponseRedirect,
@@ -8,6 +7,7 @@ from django.views.generic.base import View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 from survey.models import Survey, Question, Answer, Page, Result
 from closealternative import compute_closest_alternatives, AnsTuple
@@ -18,6 +18,10 @@ logger = logging.getLogger(__name__)
 
 class ListView(View):
     template_name = 'survey/list.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ListView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
         """Display a list with all the surveys available.
@@ -50,15 +54,11 @@ class ListView(View):
         return render(request, self.template_name, context)
 
 
-def test_me(user):
-    return True
-
-
 class SurveyView(View):
     template_name = 'survey/survey.html'
     SURVEY_PAGE = 'survey_page'
 
-    @method_decorator(user_passes_test(test_func=test_me))
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(SurveyView, self).dispatch(request, *args, **kwargs)
 
@@ -155,6 +155,10 @@ class SurveyView(View):
 class ResultView(View):
     template_name = 'survey/result.html'
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ResultView, self).dispatch(request, *args, **kwargs)
+
     def get(self, request, survey_id):
         answer_ids = request.session.get('answers', [])
         score = Answer.objects.get_score_sum(answer_ids)
@@ -172,6 +176,10 @@ class ResultView(View):
 
 class ClosestPath(View):
     template_name = 'survey/closest_path.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ClosestPath, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, survey_id):
         try:

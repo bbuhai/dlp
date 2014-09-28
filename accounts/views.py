@@ -11,7 +11,7 @@ class LoginView(View):
     template_name = 'accounts/login.html'
 
     def get(self, request):
-        next_link = reverse('survey:list')
+        next_link = request.GET.get('next', reverse('survey:list'))
         template_response = login(request=request, template_name=self.template_name)
         template_response.context_data['next'] = next_link
         return template_response

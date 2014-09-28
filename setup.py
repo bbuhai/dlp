@@ -17,6 +17,11 @@ dependencies = (
     'south==1'
 )
 
+test_requirements = (
+    'coverage==3.7',
+    'django-coverage==1.2'
+)
+
 setup(
     name='dj_start',
     version='0.1dev',
@@ -25,15 +30,12 @@ setup(
     description='A simple django project with some small apps.',
     long_description=README,
     packages=find_packages(),
-    install_requires=dependencies,
+    install_requires=dependencies + test_requirements,
     include_package_data=True,  # what does this do?
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers'
     ],
-    test_require=[
-        'coverage==3.7',
-        'django-coverage==1.2'
-    ]
+    tests_require=test_requirements
 )

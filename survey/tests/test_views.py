@@ -4,13 +4,24 @@ from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
 
 from survey.models import Result
+from django.contrib.auth.models import User
+
+
+def get_client_with_login_user():
+    c = Client()
+    u = User(username="bb")
+    u.set_password("bb")
+    u.save()
+
+    c.login(username="bb", password="bb")
+    return c
 
 
 class ListViewTest(TestCase):
     fixtures = ['survey.json']
 
     def setUp(self):
-        self.client = Client()
+        self.client = get_client_with_login_user()
 
     def test_home(self):
         response = self.client.get('/survey/')
@@ -47,7 +58,7 @@ class SurveyViewTest(TestCase):
     fixtures = ['survey.json']
 
     def setUp(self):
-        self.c = Client()
+        self.c = get_client_with_login_user()
 
     def test_get_survey_first_page(self):
         response = self.c.get('/survey/1')
@@ -103,7 +114,7 @@ class SurveyViewTest(TestCase):
             'question[4]': 10,
             'question[5]': 12
         }
-        session = SessionStore()
+        session = self.c.session
         session['survey_page'] = 2
         session['answers'] = [1, 2, 5, 7, 8]
         session.save()
@@ -125,10 +136,10 @@ class ResultViewTest(TestCase):
     fixtures = ['survey.json']
 
     def setUp(self):
-        self.c = Client()
+        self.c = get_client_with_login_user()
 
     def test_get_closest_alternative(self):
-        session = SessionStore()
+        session = self.c.session
         session['score'] = 8
         session['answers'] = [1, 2, 5, 7, 8, 10, 12]
         session.save()

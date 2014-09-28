@@ -2,12 +2,7 @@ import datetime
 
 from django.test import TestCase
 
-from survey.tests.factories import SurveyFactory
-from survey.models import Survey, Result, Question, Answer, Page
-
-
-def create_surveys(num=5):
-    return (SurveyFactory() for i in xrange(1, num+1))
+from survey.models import Survey, Result, Answer, Page
 
 
 class SurveyTest(TestCase):
