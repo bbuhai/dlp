@@ -131,7 +131,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'core',
-    'personalitytests',
     'contact',
     'survey',
     'accounts',

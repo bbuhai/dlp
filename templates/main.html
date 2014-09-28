@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load site_menu %}
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -29,12 +30,7 @@
     </header>
     <nav>
         {% block menu %}
-        <ul class="nav nav-tabs nav-justified" role="tablist">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="{% url 'pers:tests_list' %}">Tests</a></li>
-            <li><a href="{% url 'survey:list' %}">Surveys</a></li>
-            <li><a href="{% url 'contact' %}">Contact</a></li>
-        </ul>
+            {% site_menu item=1 %}
         {% endblock %}
     </nav>
     <div class="row">
