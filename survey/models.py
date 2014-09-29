@@ -8,18 +8,13 @@ from survey import managers
 class Survey(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(db_index=True)
+    created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
     def __unicode__(self):
         return self.name
 
     def __str__(self):
         return self.__unicode__()
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created_at = datetime.datetime.now()
-        super(Survey, self).save(*args, **kwargs)
 
     def shorten_description(self, length=160):
         max_length = length - 3

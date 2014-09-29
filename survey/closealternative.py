@@ -266,6 +266,7 @@ class DiscoverPath(object):
                 # no changes
                 continue
             if len(smallest) + len(largest) != weight:
+                # not the correct weight
                 continue
             new_set = self._combine_answers(self.answers[page_id][q_id], smallest, largest)
 
