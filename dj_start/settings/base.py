@@ -130,7 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'core',
+    'common',
     'contact',
     'survey',
     'accounts',
