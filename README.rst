@@ -26,7 +26,7 @@ Quick start
 
     python manage.py runserver --settings=dj_start.settings.local
 
-6. Go to `your website http://127.0.0.1:8000/survey/`_ and do the *Survey #1*
+6. Go to `your website <http://127.0.0.1:8000/survey/>`_ and do the *Survey #1*
 
 
 Running the tests::

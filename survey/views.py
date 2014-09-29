@@ -109,23 +109,9 @@ class SurveyView(View):
         """
         questions_on_page = Question.objects.filter(page__page_num=page, page__survey=survey_id)
         survey = get_object_or_404(Survey, pk=survey_id)
-        unanswered_q = []
-        answered_ids = []
-        answers_so_far = request.session.get('answers', [])
-        for q in questions_on_page:
-            answer_ids_str = request.POST.getlist('question[{}]'.format(q.id))
-            try:
-                answer_ids = map(int, answer_ids_str)
-            except ValueError as e:
-                answer_ids = []
-                unanswered_q.append(q.id)
-                logger.info(e)
+        answered_ids, unanswered_q, answers_so_far = \
+            self._process_answers(request=request, questions_on_page=questions_on_page)
 
-            if answer_ids:
-                answers_so_far += answer_ids
-                answered_ids += answer_ids
-            else:
-                unanswered_q.append(q.id)
         next_page = Page.objects.get_next_page(survey_id, page)
 
         if len(unanswered_q) == 0:
@@ -150,6 +136,27 @@ class SurveyView(View):
             'current_page': page
         }
         return render(request, self.template_name, context)
+
+    @staticmethod
+    def _process_answers(request, questions_on_page):
+        unanswered_q = []
+        answered_ids = []
+        answers_so_far = request.session.get('answers', [])
+        for q in questions_on_page:
+            answer_ids_str = request.POST.getlist('question[{}]'.format(q.id))
+            try:
+                answer_ids = map(int, answer_ids_str)
+            except ValueError as e:
+                answer_ids = []
+                unanswered_q.append(q.id)
+                logger.info(e)
+
+            if answer_ids:
+                answers_so_far += answer_ids
+                answered_ids += answer_ids
+            else:
+                unanswered_q.append(q.id)
+        return answered_ids, unanswered_q, answers_so_far
 
 
 class ResultView(View):
@@ -198,7 +205,7 @@ class ClosestPath(View):
         # and into answers the user has not submitted for that particular page and question
         # this is useful when computing score improvements
         for page in pages:
-            answers = Answer.objects.filter(question__page=page)
+            answers = Answer.objects.filter(question__page=page).select_related('question')
             given_ans[page.id] = {}
             other_ans[page.id] = {}
             for ans in answers:

@@ -178,7 +178,7 @@ class DiscoverPath(object):
         return best
 
     def _search_lower_weight_values(self, sorted_weights, w, points_needed, changes, all_changes):
-        for prev_weight in range(1, w):
+        for prev_weight in xrange(1, w):
             if prev_weight not in sorted_weights:
                 continue
             prev_details = sorted_weights[prev_weight]
@@ -235,7 +235,7 @@ class DiscoverPath(object):
         return w
 
     def _weight_question(self, max_weight, page_id, q_id, all_weights):
-        for weight in range(1, max_weight + 1):
+        for weight in xrange(1, max_weight + 1):
             best_weight = self._get_best_on_page_for_weight(
                 weight=weight,
                 page_id=page_id,
@@ -255,7 +255,7 @@ class DiscoverPath(object):
 
     def _get_best_on_page_for_weight(self, weight, page_id, q_id, all_weights):
         best_weight = None
-        for j in range(0, weight+1):
+        for j in xrange(0, weight+1):
             if self.higher_is_better:
                 smallest = _extract_worst(j, self.answers[page_id][q_id])
                 largest = _extract_best(abs(weight-j), self.other_answers[page_id][q_id])
